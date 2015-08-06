@@ -8,7 +8,7 @@
         {% else %}
             <h1>Here is your CD library!</h1>
             <ul>
-                {% foreach cd in all_cds %}
+                {% for cd in all_cds %}
                     <img src= {{ cd.getImage }}>
                     <ul>
                         <li>{{ cd.getArtist }}</li>
@@ -16,12 +16,12 @@
                     </ul>
                 {% endfor %}
             </ul>
-            <form action='/add_form'>
-                <button type='submit' class='btn'>Add new CD</button>
-            </form>
-            <form action='/search_form'>
-                <button type='submit' class='btn'>Search Through Your Collection</button>
-            </form>
         {% endif %}
+        <form action='/add_form'>
+            <button type='submit' class='btn'>Add new CD</button>
+        </form>
+        <form action='/search_form'>
+            <button type='submit' class='btn'>Search Through Your Collection</button>
+        </form>
     </body>
 </html>

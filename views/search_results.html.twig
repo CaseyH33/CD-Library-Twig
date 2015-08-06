@@ -6,7 +6,7 @@
             <h1>Here are your Search Results: </h1>
 
             <ul>
-                {% foreach cd in found %}
+                {% for cd in found %}
                     <img src= {{ cd.getImage }}>
                     <ul>
                         <li>{{ cd.getArtist }}</li>

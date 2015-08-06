@@ -9,13 +9,14 @@
     }
 
     $app = new Silex\Application();
+    $app['debug'] = true;
 
     $app->register(new Silex\Provider\TwigServiceProvider(), array(
         'twig.path' => __DIR__.'/../views'
     ));
 
     $app->get("/", function() use ($app) {
-        return $app['twig']->render('main_page.html.twig', array('all_cds' => CD::getAll()))
+        return $app['twig']->render('main_page.html.twig', array('all_cds' => CD::getAll()));
     });
 
     $app->get("/add_form", function() use ($app) {
@@ -29,7 +30,9 @@
         $foundCD = array();
         $artistSearch = $_GET['artist'];
         foreach( $allCD as $cd){
-            if($cd->getArtist() == $artistSearch) {
+            $actualCD = strtolower($cd->getArtist());
+            $actualSearch = strtolower($artistSearch);
+            if(strpos($actualCD, $actualSearch) != false) {
                 array_push($foundCD, $cd);
             }
         }
@@ -37,9 +40,9 @@
     });
     $app->post("/add", function() use ($app) {
         $newCD = new CD($_POST['artist'], $_POST['album'], $_POST['cover']);
-        $newCD->save()
-        return $app['twig']->render('added.html.twig', 'newCd' => $newCD);
+        $newCD->save();
+        return $app['twig']->render('added.html.twig', array('newCd' => $newCD));
     });
 
-
+    return $app;
 ?>
